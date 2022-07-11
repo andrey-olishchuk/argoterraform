@@ -28,7 +28,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/argoproj/argocd-example-apps.git
+    repoURL: https://github.com/andrey-olishchuk/argocd-examples
     targetRevision: HEAD
     path: guestbook
   destination:
@@ -41,6 +41,24 @@ spec:
       selfHeal: true
       prune: true 
       allowEmpty: false 
+YAML
+}
+
+resource "kubectl_manifest" "argosecret" {
+  depends_on = [helm_release.argocd]
+  yaml_body = <<YAML
+apiVersion: v1
+kind: Secret
+metadata:
+  name: private-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: https://github.com/andrey-olishchuk/argocd-examples
+  password: ghp_frvrfrffaPFHF4OB888PPDSXC2BfwIe
+  username: andrey-olishchuk
 YAML
 }
 
