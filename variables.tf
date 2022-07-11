@@ -16,6 +16,12 @@ variable "cidr" {
    default     = ""
 }
 
+variable "region" {
+   description = "Default region"
+   type        = string 
+   default     = "us-east-2"
+}
+
 
 variable "disk_size" {
    description = "Node disk size"
